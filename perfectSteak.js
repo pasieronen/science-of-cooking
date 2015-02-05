@@ -1036,7 +1036,7 @@ var perfectSteak = function (div) {
                 d3.selectAll(".mysteak").remove();
                 d3.selectAll(".containers").remove();
                 if (model.currentInfo["OKToGraph"]) {
-                    d3.selectAll("svg").remove();
+                    d3.selectAll("svg.mysteak").remove();
                     model.dataClear();
                     graph(true, '', true);
                 };

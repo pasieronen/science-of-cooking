@@ -271,7 +271,7 @@ var graphSteak = function (sampledata, flame, timestep, meatType, maxTemps, mode
                         var Offset = document.getElementById("graphSteak").offsetTop;
                         var pos = parseInt(data[0].length - (d3.event.pageY - margin.top) / (height / yStackMax) + 12);
                         var line = parseInt((d3.event.pageX - margin.left) / (x.rangeBand() + 1.2) - 35);
-                        $("line").remove();
+                        $(".mysteak line").remove();
                         var myLine = d3.selectAll(".mysteak").append("svg:line")
                             .attr("x1", margin.left)
                             .attr("y1", d3.event.pageY - margin.top - 10)
@@ -293,7 +293,7 @@ var graphSteak = function (sampledata, flame, timestep, meatType, maxTemps, mode
                 .on("mouseout", function () {
                     var ttip = d3.select('.tooltip');
                     ttip.style("opacity", 0);
-                    $("line").remove();
+                    $(".mysteak line").remove();
                     if (meatType != 'False') {
                         var rects = d3.select(this);
                         var loc = null;
