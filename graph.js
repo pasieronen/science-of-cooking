@@ -1,3 +1,18 @@
+function makeTable(container, data) {
+    var table = $("<table/>").addClass('crossSection');
+    $.each(data, function(rowIndex, r) {
+	    var row = $("<tr/>");
+	    $.each(r, function(colIndex, c) {
+		    row.append($("<t"+(rowIndex == 0 ?  "h" : "d")+"/>").text(c));
+		});
+	    table.append(row);
+	});
+    return container.append(table);
+}
+
+var crossSectionData = [{values: [], key: '', color: '#000000'}];
+var crossSectionChart = null;
+
 var graphSteak = function (sampledata, flame, timestep, meatType, maxTemps, mode, animated) {
     var graph = (function () {
             var setup = function (div, data, flame, timestep, meatType, maxTemps, mode) {
@@ -260,10 +275,41 @@ var graphSteak = function (sampledata, flame, timestep, meatType, maxTemps, mode
                             var ttip = d3.select('.tooltip');
 
                             ttip.html(mode == 'F' ? toF(data[col][row]).toFixed(1) + "\xB0F" : data[col][row].toFixed(1) + "\xB0C")
+
+                            var crossSection = data[col];
+			    $("table.crossSection").remove();
+			    var tableData = [["x", "t="+convertTime(col/timestep)]];
+			    for (i = 0; i < crossSection.length; i++) {
+				tableData.push([i, (Math.round(crossSection[i]*10)/10).toString().replace(".", ",")]);
+			    }
+			    makeTable($("#crossSection"), tableData); 
+			    if (true) {
+				var firstTime = crossSectionChart == null;
+				crossSectionData[0].values = [];
+				for (i = 0; i < crossSection.length; i++) {
+				    crossSectionData[0].values.push({x: i, y: crossSection[i]});
+				}
+				if (firstTime) {
+				    nv.addGraph(function() {
+				        var chart = nv.models.lineChart()
+					    .forceY([0,100])
+					    .showLegend(false)
+					    .showYAxis(true)
+					    .showXAxis(true);
+
+					chart.xAxis.axisLabel("dist (mm)");
+					chart.yAxis.axisLabel("temp (C)").tickFormat(d3.format('d')).tickValues([0,10,20,30,40,50,60,70,80,90,100]);
+					d3.select("#crossSection svg")
+					    .datum(crossSectionData)
+					    .call(chart);
+					crossSectionChart = chart;
+					return chart;
+				    });
+				} else {
+				    crossSectionChart.update();
+				}
+			    }
                         }
-
-
-
                     })
                     .on("mousemove", function () {
 

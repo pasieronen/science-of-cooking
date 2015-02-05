@@ -671,7 +671,7 @@ var perfectSteak = function (div) {
                 var recipePane = $("<div id='recipe-pane' class='span3'><h4 class='recipeHead'>Recipe:</h4><span></div>");
                 var newRecipeButton = $("<button class = 'btn btn-small' id='newRecipeButton'>New</button></span>");
 
-                var graphPane = $("<div id='graph-pane' class='span9' style='visibility:hidden;'></div><div class='span12'></div></div>");
+                var graphPane = $("<div id='graph-pane' class='span9' style='visibility:hidden;'></div><div class='span12'></div><div class='span15' id='crossSection'><svg width='400' height='250'></svg></div></div>");
                 div.append(recipePane, graphPane);
                 var switches = $('<div class="switch"><input type="radio" class="mytog" id="PS" name="toggle" checked><label for="PS" class="btn" id ="state">Protein State</label><input type="radio" class="mytog"id="T" name="toggle"><label for="T" class="btn" id ="state">Temperature</label></div>');
                 $('.navbar-inner').append(switcheroo);
